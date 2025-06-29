@@ -2,7 +2,9 @@
 #include <string>
 #include "sqlite3.h"
 #include "course.h"
+#include <vector>
 
+using std::vector;
 using std::string;
 
 class user

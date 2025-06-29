@@ -27,6 +27,32 @@ void course::show_all() {
 	cout << "Course Credits: " << credits << endl;
 }
 
+int course::getCRN() {
+	return crn;
+}
+string course::getTitle() {
+	return title;
+}
+string course::getDept() {
+	return dept;
+}
+string course::getTime() {
+	return time;
+}
+string course::getDow() {
+	return dow;
+}
+string course::getSemester() {
+	return semester;
+}
+int course::getYear() {
+	return year;
+}
+int course::getCredits() {
+	return credits;
+}
+
+
 void course::setCRN(int in_crn) {
 	crn = in_crn;
 }

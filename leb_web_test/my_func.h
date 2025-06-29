@@ -10,8 +10,6 @@
 #include "course.h"
 #include <vector>
 
-using std::vector;
-
 using namespace std;
 
 static void print_welcome() {
@@ -284,7 +282,7 @@ static void populate_course(sqlite3* DB, const char* db_path, course* course, in
 	course->setCredits(query_db_int_w_int(DB, sql[7], db_path, in_crn));
 
 }
-static void insert_user_admin(sqlite3* DB, const char* db_path, string in_first_name, string in_last_name, 
+static void insert_user_admin(sqlite3* DB, string in_first_name, string in_last_name, 
 	int in_id, string in_email, string in_title, string in_office) {
 	const char* sql = "INSERT INTO ADMIN (ID, NAME, SURNAME, TITLE, OFFICE, EMAIL) VALUES (?, ?, ?, ?, ?, ?);";
 	
@@ -304,6 +302,96 @@ static void insert_user_admin(sqlite3* DB, const char* db_path, string in_first_
 	sqlite3_bind_text(stmt, 4, title, -1, SQLITE_TRANSIENT);
 	sqlite3_bind_text(stmt, 5, office, -1, SQLITE_TRANSIENT);
 	sqlite3_bind_text(stmt, 6, email, -1, SQLITE_TRANSIENT);
+
+	sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+
+}
+
+static void insert_user_instructor(sqlite3* DB, int in_id, string in_first_name, string in_last_name, 
+	string in_title, int in_hire_year, string in_dept, string in_email) {
+	const char* sql = "INSERT INTO INSTRUCTOR (ID, NAME, SURNAME, TITLE, HIREYEAR, DEPARTMENT, EMAIL) VALUES (?, ?, ?, ?, ?, ?);";
+
+	sqlite3_stmt* stmt;
+
+	sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr);
+
+
+	sqlite3_bind_int(stmt, 1, in_id);
+	sqlite3_bind_text(stmt, 2, in_first_name.c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 3, in_last_name.c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 4, in_title.c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_int(stmt, 5, in_hire_year);
+	sqlite3_bind_text(stmt, 6, in_dept.c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 7, in_email.c_str(), -1, SQLITE_TRANSIENT);
+
+	sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+
+}
+
+static void insert_user_student(sqlite3* DB, int in_id, string in_first_name, string in_last_name,
+	int in_grad_year, string in_major, string in_email) {
+	const char* sql = "INSERT INTO STUDENT (ID, NAME, SURNAME, TITLE, HIREYEAR, DEPARTMENT, EMAIL) VALUES (?, ?, ?, ?, ?, ?);";
+
+	sqlite3_stmt* stmt;
+
+	sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr);
+
+
+	sqlite3_bind_int(stmt, 1, in_id);
+	sqlite3_bind_text(stmt, 2, in_first_name.c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 3, in_last_name.c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_int(stmt, 5, in_grad_year);
+	sqlite3_bind_text(stmt, 6, in_major.c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 7, in_email.c_str(), -1, SQLITE_TRANSIENT);
+
+	sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+
+}
+
+static void insert_course(sqlite3* DB, course* tempCourse) {
+	const char* sql = "INSERT INTO COURSE (CRN, TITLE, DEPARTMENT, TIME, DAYSOFTHEWEEK, SEMESTER, YEAR, CREDITS) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+
+	sqlite3_stmt* stmt;
+
+	sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr);
+
+	sqlite3_bind_int(stmt, 1, tempCourse->getCRN());
+	sqlite3_bind_text(stmt, 2, (tempCourse->getTitle()).c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 3, (tempCourse->getDept()).c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 4, (tempCourse->getTime()).c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 5, (tempCourse->getDow()).c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 6, (tempCourse->getSemester()).c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_int(stmt, 7, tempCourse->getYear());
+	sqlite3_bind_int(stmt, 8, tempCourse->getCredits());
+
+	sqlite3_step(stmt);
+
+	sqlite3_finalize(stmt);
+
+}
+
+static void insert_schedule(sqlite3* DB, int in_id, int in_crn) {
+	const char* sql = "NULL";
+	if ((in_id >= 10000) && (in_id < 20000)) {
+		cout << "called success" << endl;
+		sql = "INSERT INTO STUDENT_SCHEDULE (STUDENT_ID, COURSE_CRN) VALUES (?, ?);";
+	}
+	else if ((in_id >= 20000) && (in_id < 30000)) {
+		sql = "INSERT INTO INSTRUCTOR_SCHEDULE (INSTRUCTOR_ID, COURSE_CRN) VALUES (?, ?);";
+	}
+
+	sqlite3_stmt* stmt;
+
+	sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr);
+
+	sqlite3_bind_int(stmt, 1, in_id);
+	sqlite3_bind_int(stmt, 2, in_crn);
 
 	sqlite3_step(stmt);
 
@@ -346,4 +434,88 @@ static void delete_user(sqlite3* DB, int in_id) {
 	// Finalize statement to avoid memory leak
 	sqlite3_finalize(stmt);
 
+}
+
+static void delete_course(sqlite3* DB, int in_crn) {
+	const char* sql = "DELETE FROM COURSE WHERE CRN = ?";;
+
+	sqlite3_stmt* stmt;
+	sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr);
+
+	// Bind the userId to the first ?
+	sqlite3_bind_int(stmt, 1, in_crn);
+
+	// Execute the DELETE
+	if (sqlite3_step(stmt) == SQLITE_DONE) {
+		std::cout << "Row deleted successfully.\n";
+	}
+	else {
+		std::cerr << "Failed to delete row.\n";
+	}
+
+	// Finalize statement to avoid memory leak
+	sqlite3_finalize(stmt);
+
+}
+
+static void delete_from_schedule(sqlite3* DB, int in_id, int in_crn) {
+	const char* sql = "NULL";
+	if ((in_id >= 10000) && (in_id < 20000)) {
+		cout << "std" << endl;
+		sql = "DELETE FROM STUDENT_SCHEDULE WHERE ID = ? AND CRN = ?";
+	}
+	else if ((in_id >= 20000) && (in_id < 30000)) {
+		cout << "teach" << endl;
+		sql = "DELETE FROM INSTRUCTOR_SCHEDULE WHERE ID = ? AND CRN = ?";
+	}
+	else {
+		cout << "Invalid ID" << endl;
+	}
+
+	sqlite3_stmt* stmt;
+	sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr);
+
+	// Bind the userId to the first ?
+	sqlite3_bind_int(stmt, 1, in_id);
+
+	// Execute the DELETE
+	if (sqlite3_step(stmt) == SQLITE_DONE) {
+		std::cout << "Row deleted successfully.\n";
+	}
+	else {
+		std::cerr << "Failed to delete row.\n";
+	}
+
+	// Finalize statement to avoid memory leak
+	sqlite3_finalize(stmt);
+
+}
+static vector<int> get_crn(sqlite3* db, const char* db_path, int in_id) {
+	const char* sql = "NULL";
+	vector<int> out;
+
+	if ((in_id >= 10000) && (in_id < 20000)) {
+		sql = "SELECT COURSE_CRN FROM STUDENT_SCHEDULE WHERE STUDENT_ID = ?;";
+	}
+	else if ((in_id >= 20000) && (in_id < 30000)) {
+		sql = "SELECT COURSE_CRN FROM INSTRUCTOR_SCHEDULE WHERE INSTRUCTOR_ID = ?;";
+	}
+	else {
+		cout << "Invalid ID" << endl;
+		return out;
+	}
+
+	sqlite3_stmt* stmt;
+	sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
+
+	sqlite3_bind_int(stmt, 1, in_id);
+
+	while ((sqlite3_step(stmt)) == SQLITE_ROW) {
+		int crn = sqlite3_column_int(stmt, 0);
+		out.push_back(crn);
+	}
+
+	sqlite3_finalize(stmt);
+
+	return out;
 }

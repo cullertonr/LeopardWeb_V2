@@ -1,17 +1,11 @@
 #pragma once
-#include "user.h"
-#include "course.h"
-#include <vector>
-
-using std::vector;
-
+#include "User.h"
 class student :
     public user
 {
 protected:
     int grad_year;
     string major;
-    //vector<course*> schedule;
 
 public:
 
@@ -27,7 +21,7 @@ public:
     void setGrad_year(int in_grad_year);
     void setMajor(string in_major);
 
-    void print_schedule();
+    void print_schedule(sqlite3* db, const char* db_path);
     void search_course();
     void add_course();
     void drop_course();

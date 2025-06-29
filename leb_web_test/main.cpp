@@ -24,20 +24,33 @@ int main(int argc, char** argv)
 	//}
 	string email = "whited3";
 	string password = "Tp8P!9Ls";
+	student* tempStud = new student();
+	populate_student(DB, db_path, tempStud, "curiem");
+	tempStud->show_all();
+
+	insert_schedule(DB, 10002, 11357);
+	insert_schedule(DB, 10002, 12674);
+	insert_schedule(DB, 10002, 12847);
+
+	tempStud->print_schedule(DB, db_path);
 
 	if (get_role(DB, db_path, email) == "Admin") {
 		admin* testUser = new admin();
-		course* testCourse = new course();
 		populate_admin(DB, db_path, testUser, email);
-		populate_course(DB, db_path, testCourse, 18001);
+		/*course* testCourse = new course(12345, "Math", "BAMA", "8:00-9:15", "MWF", "Fall", 2025, 4);
+		course* testCourse2 = new course();
+		populate_admin(DB, db_path, testUser, email);
+		insert_course(DB, testCourse);
+		populate_course(DB, db_path, testCourse2, 12345);*/
 		cout << "Welcome " << testUser->show_first_name() << endl;
 
-		testUser->show_all();
-		//testCourse->show_all();
-		//delete_user(DB, 30004);
-		//insert_user_admin(DB, db_path, "Nick", "Dos", 30004, "dosn2", "Dean", "Dobbs 202");
+		/*testUser->show_all();
+		testCourse->show_all();
+		delete_user(DB, 30004);
+		delete_course(DB, 12345);*/
+		//insert_user_admin(DB, "Nick", "Dos", 30004, "dosn2", "Dean", "Dobbs 202");
 		
-	/*	admin* testUser2 = new admin();
+		/*admin* testUser2 = new admin();
 		populate_admin(DB, db_path, testUser2, "dosn2");
 		testUser2->show_all();*/
 
@@ -47,28 +60,28 @@ int main(int argc, char** argv)
 		cin >> user_in;
 		while (logout(user_in) != 0) {
 			if (user_in == 1) {
-				testUser->add_courses();
+				testUser->add_courses(DB);
 			}
 			else if (user_in == 2) {
-				testUser->remove_courses();
+				testUser->remove_courses(DB);
 			}
 			else if (user_in == 3) {
-				testUser->add_users();
+				testUser->add_users(DB);
 			}
 			else if (user_in == 4) {
-				testUser->remove_users();
+				testUser->remove_users(DB);
 			}
 			else if (user_in == 5) {
-				testUser->add_student_course();
+				testUser->add_student_course(DB);
 			}
 			else if (user_in == 6) {
-				testUser->remove_student_course();
+				testUser->remove_student_course(DB);
 			}
 			else if (user_in == 7) {
-				testUser->search_print_roster();
+				testUser->searchCourse_def(DB, db_path);
 			}
 			else if (user_in == 8) {
-				testUser->searchCourse_def(DB, db_path);
+				testUser->searchCourse(DB, db_path);
 			}
 			else {
 				cout << "Invalid input" << endl;

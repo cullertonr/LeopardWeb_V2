@@ -1,4 +1,6 @@
 #include "student.h"
+#include "course.h"
+#include "my_func.h"
 #include <iostream>
 #include <string>
 
@@ -40,8 +42,16 @@ void student::setMajor(string in_major) {
 	major = in_major;
 }
 
-void student::print_schedule() {
-	cout << "Printing " << first_name << " " << last_name << "'s schedule." << endl;
+void student::print_schedule(sqlite3* db, const char* db_path) {
+	vector<int> schedule = get_crn(db, db_path, id);
+	cout << schedule.size() << endl;
+	for (int i = 0; i < schedule.size(); i++) {
+		course* tempCourse = new course();
+		populate_course(db, db_path, tempCourse, schedule[i]);
+		tempCourse->show_all();
+		cout << endl;
+	}
+	//cout << "Printing " << first_name << " " << last_name << "'s schedule." << endl;
 }
 void student::search_course() {
 	cout << "Searching for Courses: " << endl;

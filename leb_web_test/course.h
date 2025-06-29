@@ -25,6 +25,15 @@ public:
 
 	void show_all();
 
+	int getCRN();
+	string getTitle();
+	string getDept();
+	string getTime();
+	string getDow();
+	string getSemester();
+	int getYear();
+	int getCredits();
+
 	void setCRN(int in_crn);
 	void setTitle(string in_title);
 	void setDept(string in_dept);

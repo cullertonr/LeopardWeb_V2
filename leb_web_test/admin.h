@@ -1,5 +1,6 @@
 #pragma once
 #include "User.h"
+#include "sqlite3.h"
 class admin :
     public user
 {
@@ -22,13 +23,14 @@ public:
     void setTitle(string in_title);
     void setOffice(string office);
 
-    void add_courses();
-    void remove_courses();
-    void add_users();
-    void remove_users();
-    void remove_student_course();
-    void add_student_course();
-    void search_print_roster();
+    void add_courses(sqlite3* db);
+    void remove_courses(sqlite3* db);
+    void add_users(sqlite3* db);
+    void remove_users(sqlite3* db);
+    void remove_student_course(sqlite3* db);
+    void add_student_course(sqlite3* db);
+    void link_instructor(sqlite3* db);
+    void unlink_instructor(sqlite3* db);
 
     // destructor
     virtual ~admin();
