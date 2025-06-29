@@ -19,9 +19,8 @@ static void populate_admin(sqlite3* DB, const char* db_path, admin* user, string
 static void populate_course(sqlite3* DB, const char* db_path, course* course, int in_crn);
 static void insert_user_admin(sqlite3* DB, const char* db_path, string in_first_name, string in_last_name,
 	int in_id, string in_email, string in_title, string in_office);
-static void delete_user(sqlite3* DB, const char* db_path, int in_id);
-//static void insert_user_instructor();
 //static void insert_user_student();
+static void delete_user(sqlite3* DB, int in_id);
 //static void remove_user_instructor();
 //static void remove_user_student();
 //static void insert_course();

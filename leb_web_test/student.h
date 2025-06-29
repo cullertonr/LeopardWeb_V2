@@ -1,11 +1,17 @@
 #pragma once
-#include "User.h"
+#include "user.h"
+#include "course.h"
+#include <vector>
+
+using std::vector;
+
 class student :
     public user
 {
 protected:
     int grad_year;
     string major;
+    //vector<course*> schedule;
 
 public:
 

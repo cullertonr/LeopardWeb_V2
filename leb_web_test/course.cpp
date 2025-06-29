@@ -16,6 +16,17 @@ course::course(int in_crn, string in_title, string in_dept,
 	credits = in_credits;
 }
 
+void course::show_all() {
+	cout << "Course CRN: " << crn << endl;
+	cout << "Course Title: " << title << endl;
+	cout << "Course Department: " << dept << endl;
+	cout << "Course Meeting Time: " << time << endl;
+	cout << "Course Days of the Week: " << dow << endl;
+	cout << "Course Semester: " << semester << endl;
+	cout << "Course Year: " << year << endl;
+	cout << "Course Credits: " << credits << endl;
+}
+
 void course::setCRN(int in_crn) {
 	crn = in_crn;
 }

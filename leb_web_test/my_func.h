@@ -8,6 +8,9 @@
 #include "instructor.h"
 #include "admin.h"
 #include "course.h"
+#include <vector>
+
+using std::vector;
 
 using namespace std;
 
@@ -263,7 +266,7 @@ static void populate_course(sqlite3* DB, const char* db_path, course* course, in
 	const char* sql[] = {
 		"SELECT CRN FROM COURSE WHERE CRN = ?; ",
 		"SELECT TITLE FROM COURSE WHERE CRN = ?; ",
-		"SELECT DEPT FROM COURSE WHERE CRN = ?; ",
+		"SELECT DEPARTMENT FROM COURSE WHERE CRN = ?; ",
 		"SELECT TIME FROM COURSE WHERE CRN = ?; ",
 		"SELECT DAYSOFTHEWEEK FROM COURSE WHERE CRN = ?; ",
 		"SELECT SEMESTER FROM COURSE WHERE CRN = ?; ",
@@ -307,7 +310,8 @@ static void insert_user_admin(sqlite3* DB, const char* db_path, string in_first_
 	sqlite3_finalize(stmt);
 
 }
-static void delete_user(sqlite3* DB, const char* db_path, int in_id) {
+
+static void delete_user(sqlite3* DB, int in_id) {
 	const char* sql = "NULL";
 	if ((in_id >= 10000) && (in_id < 20000)){
 		cout << "std" << endl;

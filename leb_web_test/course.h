@@ -23,6 +23,8 @@ public:
 	course(int in_crn, string in_title, string in_dept,
 		string in_time, string in_dow, string in_semester, int in_year, int in_credits);
 
+	void show_all();
+
 	void setCRN(int in_crn);
 	void setTitle(string in_title);
 	void setDept(string in_dept);

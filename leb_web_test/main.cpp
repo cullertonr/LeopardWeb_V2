@@ -27,9 +27,20 @@ int main(int argc, char** argv)
 
 	if (get_role(DB, db_path, email) == "Admin") {
 		admin* testUser = new admin();
+		course* testCourse = new course();
 		populate_admin(DB, db_path, testUser, email);
+		populate_course(DB, db_path, testCourse, 18001);
 		cout << "Welcome " << testUser->show_first_name() << endl;
+
 		testUser->show_all();
+		//testCourse->show_all();
+		//delete_user(DB, 30004);
+		//insert_user_admin(DB, db_path, "Nick", "Dos", 30004, "dosn2", "Dean", "Dobbs 202");
+		
+	/*	admin* testUser2 = new admin();
+		populate_admin(DB, db_path, testUser2, "dosn2");
+		testUser2->show_all();*/
+
 		print_welcome();
 		print_admin();
 		int user_in;
@@ -55,6 +66,9 @@ int main(int argc, char** argv)
 			}
 			else if (user_in == 7) {
 				testUser->search_print_roster();
+			}
+			else if (user_in == 8) {
+				testUser->searchCourse_def(DB, db_path);
 			}
 			else {
 				cout << "Invalid input" << endl;

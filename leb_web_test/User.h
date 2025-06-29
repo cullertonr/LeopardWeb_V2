@@ -1,5 +1,8 @@
 #pragma once
 #include <string>
+#include "sqlite3.h"
+#include "course.h"
+
 using std::string;
 
 class user
@@ -29,7 +32,8 @@ public:
 	virtual int show_id();				// returns id number
 	virtual string show_email();		//returns email
 	virtual void show_all();			// prints all attributes
-
+	virtual void searchCourse_def(sqlite3* db, const char* db_path);
+	virtual void searchCourse(sqlite3* db, const char* db_path);
 	// destructor
 	~user();
 };
