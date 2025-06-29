@@ -26,7 +26,7 @@ public:
 
     void print_schedule();
     void print_class_list();
-    void search_courses();
+    void search_for_student();
 
     // destructor
     virtual ~instructor();

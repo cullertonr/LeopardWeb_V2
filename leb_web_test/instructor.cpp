@@ -50,8 +50,8 @@ void instructor::print_schedule() {
 void instructor::print_class_list() {
 	cout << "Priting the class list:" << endl;
 }
-void instructor::search_courses() {
-	cout << "Searching for courses:" << endl;
+void instructor::search_for_student() {
+	cout << "----- Searching for Student ------" << endl;
 }
 instructor::~instructor() {
 

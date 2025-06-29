@@ -96,7 +96,39 @@ int main(int argc, char** argv)
 		testUser->show_all();
 		print_welcome();
 		print_instructor();
-
+		int user_in;
+		cin >> user_in;
+		while (logout(user_in) != 0) {
+			if (user_in == 1) {
+				testUser->add_courses(DB);
+			}
+			else if (user_in == 2) {
+				testUser->remove_courses(DB);
+			}
+			else if (user_in == 3) {
+				testUser->add_users(DB);
+			}
+			else if (user_in == 4) {
+				testUser->remove_users(DB);
+			}
+			else if (user_in == 5) {
+				testUser->add_student_course(DB);
+			}
+			else if (user_in == 6) {
+				testUser->remove_student_course(DB);
+			}
+			else if (user_in == 7) {
+				testUser->searchCourse_def(DB, db_path);
+			}
+			else if (user_in == 8) {
+				testUser->searchCourse(DB, db_path);
+			}
+			else {
+				cout << "Invalid input" << endl;
+			}
+			print_instructor();
+			cin >> user_in;
+		}
 	} else {
 		student* testUser = new student();
 		populate_student(DB, db_path, testUser, email);
@@ -104,7 +136,39 @@ int main(int argc, char** argv)
 		testUser->show_all();
 		print_welcome();
 		print_student();
-
+		int user_in;
+		cin >> user_in;
+		while (logout(user_in) != 0) {
+			if (user_in == 1) {
+				testUser->add_courses(DB);
+			}
+			else if (user_in == 2) {
+				testUser->remove_courses(DB);
+			}
+			else if (user_in == 3) {
+				testUser->add_users(DB);
+			}
+			else if (user_in == 4) {
+				testUser->remove_users(DB);
+			}
+			else if (user_in == 5) {
+				testUser->add_student_course(DB);
+			}
+			else if (user_in == 6) {
+				testUser->remove_student_course(DB);
+			}
+			else if (user_in == 7) {
+				testUser->searchCourse_def(DB, db_path);
+			}
+			else if (user_in == 8) {
+				testUser->searchCourse(DB, db_path);
+			}
+			else {
+				cout << "Invalid input" << endl;
+			}
+			print_student();
+			cin >> user_in;
+		}
 	}
 
 
