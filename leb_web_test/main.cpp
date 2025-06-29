@@ -26,11 +26,11 @@ int main(int argc, char** argv)
 	//string email = "whited3";
 	//string password = "Tp8P!9Ls";
 
-	string email = "curiem";
-	string password = "Uz7V^5Mw";
+	//string email = "curiem";
+	//string password = "Uz7V^5Mw";
 
-	//string email = "whited3";
-	//string password = "Tp8P!9Ls";
+	string email = "brooksm";
+	string password = "qW9t@3zL";
 
 	/*student* tempStud = new student();
 	populate_student(DB, db_path, tempStud, "curiem");
@@ -82,6 +82,9 @@ int main(int argc, char** argv)
 			else if (user_in == 8) {
 				testUser->searchCourse(DB, db_path);
 			}
+			else if (user_in == 9) {
+				testUser->link_instructor(DB);
+			}
 			else {
 				cout << "Invalid input" << endl;
 			}
@@ -99,13 +102,15 @@ int main(int argc, char** argv)
 		cin >> user_in;
 		while (logout(user_in) != 0) {
 			if (user_in == 1) {
-				testUser->print_class_list();
+				testUser->setSchedule(DB, db_path);
+				testUser->print_class_list(DB, db_path);
 			}
 			else if (user_in == 2) {
 				testUser->search_for_student();
 			}
 			else if (user_in == 3) {
-				testUser->print_schedule();
+				testUser->setSchedule(DB, db_path);
+				testUser->print_schedule(DB, db_path);
 			}
 			else if (user_in == 4) {
 				testUser->searchCourse_def(DB, db_path);

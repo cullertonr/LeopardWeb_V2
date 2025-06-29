@@ -15,6 +15,8 @@ static int logout(int input);
 static string get_role(sqlite3* DB, const char* db_path, string in_email);
 
 static void populate_student(sqlite3* DB, const char* db_path, student* user, string in_email);
+static void populate_student_w_id(sqlite3* DB, const char* db_path, student* user, int in_id);
+
 static void populate_instructor(sqlite3* DB, const char* db_path, instructor* user, string in_email);
 static void populate_admin(sqlite3* DB, const char* db_path, admin* user, string in_email);
 static void populate_course(sqlite3* DB, const char* db_path, course* course, int in_crn);
@@ -35,5 +37,7 @@ static void delete_from_schedule(sqlite3* DB, int in_id, int in_crn);
 static void remove_student_course(sqlite3* DB, int in_id, int in_crn);
 
 static vector<int> get_crn(sqlite3* db, const char* db_path, int in_id);
+static vector<int> get_id(sqlite3* db, const char* db_path, int in_crn);
+
 
 //static void check_time_conflict();

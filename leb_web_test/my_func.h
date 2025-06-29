@@ -222,6 +222,24 @@ static void populate_student(sqlite3* DB, const char* db_path, student* user, st
 	user->setGrad_year(query_db_int(DB, sql[4], db_path, in_email));
 	user->setMajor(query_db_text(DB, sql[5], db_path, in_email));
 }
+static void populate_student_w_id(sqlite3* DB, const char* db_path, student* user, int in_id) {
+
+	const char* sql[] = {
+		"SELECT NAME FROM STUDENT WHERE ID = ?; ",
+		"SELECT SURNAME FROM STUDENT WHERE ID = ?; ",
+		"SELECT ID FROM STUDENT WHERE ID = ?; ",
+		"SELECT EMAIL FROM STUDENT WHERE ID = ?; ",
+		"SELECT GRADYEAR FROM STUDENT WHERE ID = ?; ",
+		"SELECT MAJOR FROM STUDENT WHERE ID = ?; "
+	};
+
+	user->setFirst_Name(query_db_text_w_int(DB, sql[0], db_path, in_id));
+	user->setLast_Name(query_db_text_w_int(DB, sql[1], db_path, in_id));
+	user->setID(query_db_int_w_int(DB, sql[2], db_path, in_id));
+	user->setEmail(query_db_text_w_int(DB, sql[3], db_path, in_id));
+	user->setGrad_year(query_db_int_w_int(DB, sql[4], db_path, in_id));
+	user->setMajor(query_db_text_w_int(DB, sql[5], db_path, in_id));
+}
 static void populate_instructor(sqlite3* DB, const char* db_path, instructor* user, string in_email) {
 
 	const char* sql[] = {
@@ -548,4 +566,23 @@ static vector<int> get_crn(sqlite3* db, const char* db_path, int in_id) {
 
 static void check_time_conflict() {
 
+}
+
+static vector<int> get_id(sqlite3* db, const char* db_path, int in_crn) {
+	const char* sql = "SELECT STUDENT_ID FROM STUDENT_SCHEDULE WHERE COURSE_CRN = ?;";
+	vector<int> out;
+
+	sqlite3_stmt* stmt;
+	sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
+
+	sqlite3_bind_int(stmt, 1, in_crn);
+
+	while ((sqlite3_step(stmt)) == SQLITE_ROW) {
+		int crn = sqlite3_column_int(stmt, 0);
+		out.push_back(crn);
+	}
+
+	sqlite3_finalize(stmt);
+
+	return out;
 }

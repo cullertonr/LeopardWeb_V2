@@ -7,6 +7,7 @@ protected:
     int hire_year;
     string dept;
     string title;
+    vector<int> schedule;
 
 public:
 
@@ -24,8 +25,10 @@ public:
     void setDept(string in_dept);
     void setTitle(string in_title);
 
-    void print_schedule();
-    void print_class_list();
+    void setSchedule(sqlite3* db, const char* db_path);
+
+    void print_schedule(sqlite3* db, const char* db_path);
+    void print_class_list(sqlite3* db, const char* db_path);
     void search_for_student();
 
     // destructor
