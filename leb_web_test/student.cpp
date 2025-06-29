@@ -41,26 +41,48 @@ void student::setGrad_year(int in_grad_year) {
 void student::setMajor(string in_major) {
 	major = in_major;
 }
+void student::setSchedule(sqlite3* db, const char* db_path) {
+	schedule = get_crn(db, db_path, id);
+}
 
 void student::print_schedule(sqlite3* db, const char* db_path) {
-	vector<int> schedule = get_crn(db, db_path, id);
 	cout << schedule.size() << endl;
-	for (int i = 0; i < schedule.size(); i++) {
-		course* tempCourse = new course();
-		populate_course(db, db_path, tempCourse, schedule[i]);
-		tempCourse->show_all();
-		cout << endl;
+	if (schedule.empty()) {
+		cout << first_name << " has no registered courses." << endl;
+	}
+	else {
+		for (int i = 0; i < schedule.size(); i++) {
+			course* tempCourse = new course();
+			populate_course(db, db_path, tempCourse, schedule[i]);
+			tempCourse->show_all();
+			cout << endl;
+		}
 	}
 	//cout << "Printing " << first_name << " " << last_name << "'s schedule." << endl;
 }
 void student::search_course() {
 	cout << "Searching for Courses: " << endl;
 }
-void student::add_course() {
+void student::add_course(sqlite3* db, const char* db_path) {
+	int in_crn;
 	cout << "Add Course:" << endl;
+	cout << "Enter CRN: ";
+	cin >> in_crn;
+	const char* sql = "SELECT CRN FROM COURSE WHERE CRN = ?;";
+	if (query_db_int_w_int(db, sql, db_path, in_crn) == -1) {
+		cout << "Invalid CRN" << endl;
+	}
+	else {
+		insert_schedule(db, id, in_crn);
+	}
+
 }
-void student::drop_course() {
-	cout << "Drop Course:" << endl;
+void student::drop_course(sqlite3* db) {
+	cout << "----- Drop Course -----" << endl;
+	int course_crn;
+	cout << "Enter the Course CRN that you Want to Drop (5-digit Number): ";
+	cin >> course_crn;
+	remove_student_course(db, id, course_crn);
 }
 student::~student() {
 

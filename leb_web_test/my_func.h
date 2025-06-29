@@ -344,9 +344,9 @@ static void insert_user_student(sqlite3* DB, int in_id, string in_first_name, st
 	sqlite3_bind_int(stmt, 1, in_id);
 	sqlite3_bind_text(stmt, 2, in_first_name.c_str(), -1, SQLITE_TRANSIENT);
 	sqlite3_bind_text(stmt, 3, in_last_name.c_str(), -1, SQLITE_TRANSIENT);
-	sqlite3_bind_int(stmt, 5, in_grad_year);
-	sqlite3_bind_text(stmt, 6, in_major.c_str(), -1, SQLITE_TRANSIENT);
-	sqlite3_bind_text(stmt, 7, in_email.c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_int(stmt, 4, in_grad_year);
+	sqlite3_bind_text(stmt, 5, in_major.c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 6, in_email.c_str(), -1, SQLITE_TRANSIENT);
 
 	sqlite3_step(stmt);
 
@@ -462,11 +462,11 @@ static void delete_from_schedule(sqlite3* DB, int in_id, int in_crn) {
 	const char* sql = "NULL";
 	if ((in_id >= 10000) && (in_id < 20000)) {
 		cout << "std" << endl;
-		sql = "DELETE FROM STUDENT_SCHEDULE WHERE ID = ? AND CRN = ?";
+		sql = "DELETE FROM STUDENT_SCHEDULE WHERE STUDENT_ID = ? AND COURSE_CRN = ?";
 	}
 	else if ((in_id >= 20000) && (in_id < 30000)) {
 		cout << "teach" << endl;
-		sql = "DELETE FROM INSTRUCTOR_SCHEDULE WHERE ID = ? AND CRN = ?";
+		sql = "DELETE FROM INSTRUCTOR_SCHEDULE WHERE INSTRUCTOR_ID = ? AND COURSE_CRN = ?";
 	}
 	else {
 		cout << "Invalid ID" << endl;
@@ -477,6 +477,7 @@ static void delete_from_schedule(sqlite3* DB, int in_id, int in_crn) {
 
 	// Bind the userId to the first ?
 	sqlite3_bind_int(stmt, 1, in_id);
+	sqlite3_bind_int(stmt, 2, in_crn);
 
 	// Execute the DELETE
 	if (sqlite3_step(stmt) == SQLITE_DONE) {
@@ -490,6 +491,31 @@ static void delete_from_schedule(sqlite3* DB, int in_id, int in_crn) {
 	sqlite3_finalize(stmt);
 
 }
+
+static void remove_student_course(sqlite3* DB, int in_id, int in_crn) {
+	const char* sql = "NULL";
+	sql = "DELETE FROM STUDENT_SCHEDULE WHERE STUDENT_ID = ? AND COURSE_CRN = ?";
+
+	sqlite3_stmt* stmt;
+	sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr);
+
+	// Bind the instructor/student ID to the first ? and bind the instructor/studentuser CRN to the 2nd ?
+	sqlite3_bind_int(stmt, 1, in_id);
+	sqlite3_bind_int(stmt, 2, in_crn);
+
+	// Execute the DELETE
+	if (sqlite3_step(stmt) == SQLITE_DONE) {
+		std::cout << "Row deleted successfully.\n";
+	}
+	else {
+		std::cerr << "Failed to delete row.\n";
+	}
+
+	// Finalize statement to avoid memory leak
+	sqlite3_finalize(stmt);
+
+}
+
 static vector<int> get_crn(sqlite3* db, const char* db_path, int in_id) {
 	const char* sql = "NULL";
 	vector<int> out;
@@ -518,4 +544,8 @@ static vector<int> get_crn(sqlite3* db, const char* db_path, int in_id) {
 	sqlite3_finalize(stmt);
 
 	return out;
+}
+
+static void check_time_conflict() {
+
 }

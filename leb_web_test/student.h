@@ -6,6 +6,7 @@ class student :
 protected:
     int grad_year;
     string major;
+    vector<int> schedule;
 
 public:
 
@@ -20,11 +21,12 @@ public:
     virtual void show_all();			// prints all attributes
     void setGrad_year(int in_grad_year);
     void setMajor(string in_major);
+    void setSchedule(sqlite3* db, const char* db_path);
 
     void print_schedule(sqlite3* db, const char* db_path);
     void search_course();
-    void add_course();
-    void drop_course();
+    void add_course(sqlite3* db, const char* db_path);
+    void drop_course(sqlite3* db);
 
     // destructor
     virtual ~student();

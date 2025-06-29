@@ -25,16 +25,15 @@ static void insert_user_instructor(sqlite3* DB, int in_id, string in_first_name,
 	string in_title, int in_hire_year, string in_dept, string in_email);
 static void insert_user_student(sqlite3* DB, int in_id, string in_first_name, string in_last_name,
 	int in_grad_year, string in_major, string in_email);
+
 static void insert_course(sqlite3* DB, course* tempCourse);
 static void insert_schedule(sqlite3* DB, int in_id, int in_crn);
 static void delete_user(sqlite3* DB, int in_id);
 static void delete_course(sqlite3* DB, int in_crn);
 static void delete_from_schedule(sqlite3* DB, int in_id, int in_crn);
 
+static void remove_student_course(sqlite3* DB, int in_id, int in_crn);
+
 static vector<int> get_crn(sqlite3* db, const char* db_path, int in_id);
-//static void insert_user_instructor();
-//static void insert_user_student();
-//static void remove_user_instructor();
-//static void remove_user_student();
-//static void insert_course();
-//static void remove_course();
+
+//static void check_time_conflict();
