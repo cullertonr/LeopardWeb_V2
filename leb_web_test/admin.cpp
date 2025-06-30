@@ -48,8 +48,7 @@ void admin::setOffice(string in_office) {
 }
 
 void admin::add_courses(sqlite3* db) {
-    cout << "Adding a New Course to LeopardWeb..." << endl;
-    cout << "----- Please Enter The Course Credentials ------" << endl;
+    cout << "----- Adding a New Course to LeopardWeb -----" << endl;
     int crn, year, credits;
     string title, dept, time, dow, semester;
 
@@ -162,8 +161,9 @@ void admin::add_users(sqlite3* db) {
         cin >> ins_surname;
         tempUser->setLast_Name(ins_surname);
 
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Enter New Instructor's Title: ";
-        cin >> ins_title;
+        getline(cin, ins_title);
         tempUser->setTitle(ins_title);
 
         cout << "Enter New Instructor's Hire Year: ";
@@ -218,7 +218,7 @@ void admin::add_users(sqlite3* db) {
 }
 void admin::remove_users(sqlite3* db) {
     int remove_id;
-	cout << "Removing user:" << endl;
+	cout << "----- Removing user -----" << endl;
     cout << "Enter ID of User to be Removed: ";
     cin >> remove_id;
     // display information of the user we are removing
@@ -226,9 +226,15 @@ void admin::remove_users(sqlite3* db) {
 }
 void admin::remove_student_course(sqlite3* db) {
 	cout << "----- Removing Student From Course -----" << endl;
+    int stu_id, course_crn;
+    cout << "Enter the Student ID to be Unlinked: ";
+    cin >> stu_id;
+    cout << "Enter the Course CRN Pertaining to the Student: ";
+    cin >> course_crn;
+    delete_from_schedule(db, stu_id, course_crn);
 }
 void admin::add_student_course(sqlite3* db) {
-	cout << "Adding Student Course:" << endl;
+	cout << "----- Adding Student to Course -----" << endl;
     int in_id, in_crn;
     cout << "Enter the Student ID: ";
     cin >> in_id;
@@ -237,6 +243,7 @@ void admin::add_student_course(sqlite3* db) {
     insert_schedule(db, in_id, in_crn);
 }
 void admin::link_instructor(sqlite3* db) {
+    cout << "----- Linking Instructor to Course -----" << endl;
     int in_id, in_crn;
     cout << "Enter the Instructor ID: ";
     cin >> in_id;

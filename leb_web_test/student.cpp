@@ -8,6 +8,31 @@ using std::cout;
 using std::string;
 using std::endl;
 
+int timeToMinutes(const string& timeStr) {
+	size_t colon = timeStr.find(':');
+	int hours = stoi(timeStr.substr(0, colon));
+	int minutes = stoi(timeStr.substr(colon + 1));
+	return hours * 60 + minutes;
+}
+
+void splitInterval(const string& interval, string& start, string& end) {
+	size_t dash = interval.find('-');
+	start = interval.substr(0, dash);
+	end = interval.substr(dash + 1);
+}
+
+bool intervalsOverlap(const string& interval1, const string& interval2) {
+	string s1, e1, s2, e2;
+	splitInterval(interval1, s1, e1);
+	splitInterval(interval2, s2, e2);
+
+	int start1 = timeToMinutes(s1);
+	int end1 = timeToMinutes(e1);
+	int start2 = timeToMinutes(s2);
+	int end2 = timeToMinutes(e2);
+
+	return (start1 < end2) && (start2 < end1);
+}
 
 student::student() {
 
@@ -73,7 +98,48 @@ void student::add_course(sqlite3* db, const char* db_path) {
 		cout << "Invalid CRN" << endl;
 	}
 	else {
-		insert_schedule(db, id, in_crn);
+		course* tempCourse1 = new course();
+		populate_course(db, db_path, tempCourse1, in_crn);
+		tempCourse1->show_all();
+		//check_time_conflict(in_crn);
+		int overlap = 1;
+		for (int i = 0; i < schedule.size(); i++) {
+			course* tempCourse2 = new course();
+			populate_course(db, db_path, tempCourse2, schedule[i]);
+			//cout << tempCourse2->getTitle() << endl;
+			if (tempCourse1->getYear() != tempCourse2->getYear()) {
+				continue;
+			}
+			else {
+				//cout << "true" << endl;
+				if (tempCourse1->getSemester() != tempCourse2->getSemester()) {
+					continue;
+				}
+				else {
+					//cout << "true" << endl;
+					if (tempCourse1->getDow() != tempCourse2->getDow()) {
+						continue;
+					}
+					else {
+						//cout << "true" << endl;
+						if (intervalsOverlap(tempCourse1->getTime(), tempCourse2->getTime())) {
+							//cout << "Intervals overlap" << endl;;
+							overlap = 0;
+						}
+						else {
+							//cout << "No overlap" << endl;
+						}
+					}
+				}
+			}
+		}
+		if (overlap == 0) {
+			cout << "ERROR: OVERLAP" << endl;
+		}
+		else {
+			insert_schedule(db, id, in_crn);
+		}
+
 	}
 
 }
