@@ -100,33 +100,46 @@ void student::add_course(sqlite3* db, const char* db_path) {
 	else {
 		course* tempCourse1 = new course();
 		populate_course(db, db_path, tempCourse1, in_crn);
+		tempCourse1->show_all();
 		//check_time_conflict(in_crn);
+		int overlap = 1;
 		for (int i = 0; i < schedule.size(); i++) {
 			course* tempCourse2 = new course();
 			populate_course(db, db_path, tempCourse2, schedule[i]);
+			//cout << tempCourse2->getTitle() << endl;
 			if (tempCourse1->getYear() != tempCourse2->getYear()) {
-				insert_schedule(db, id, in_crn);
+				continue;
 			}
 			else {
+				//cout << "true" << endl;
 				if (tempCourse1->getSemester() != tempCourse2->getSemester()) {
-					insert_schedule(db, id, in_crn);
+					continue;
 				}
 				else {
+					//cout << "true" << endl;
 					if (tempCourse1->getDow() != tempCourse2->getDow()) {
-						insert_schedule(db, id, in_crn);
+						continue;
 					}
 					else {
+						//cout << "true" << endl;
 						if (intervalsOverlap(tempCourse1->getTime(), tempCourse2->getTime())) {
-							cout << "Intervals overlap\n";
+							//cout << "Intervals overlap" << endl;;
+							overlap = 0;
 						}
 						else {
-							cout << "No overlap\n";
-							insert_schedule(db, id, in_crn);
+							//cout << "No overlap" << endl;
 						}
 					}
 				}
 			}
 		}
+		if (overlap == 0) {
+			cout << "ERROR: OVERLAP" << endl;
+		}
+		else {
+			insert_schedule(db, id, in_crn);
+		}
+
 	}
 
 }

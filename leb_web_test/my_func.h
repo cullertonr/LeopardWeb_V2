@@ -19,12 +19,37 @@ static void print_welcome() {
 }
 static void print_admin() {
 	cout << "Choose an Option" << endl;
+	cout << "1 - Add Courses" << endl;
+	cout << "2 - Remove Courses" << endl;
+	cout << "3 - Add Users" << endl;
+	cout << "4 - Remove Users" << endl;
+	cout << "5 - Add Student to Course" << endl;
+	cout << "6 - Remove Student from Course" << endl;
+	cout << "7 - Search for Course (Default)" << endl;
+	cout << "8 - Search for Course" << endl;
+	cout << "9 - Link Instructor to Course" << endl;
+	cout << "10 - Unlink Instructor from Course" << endl;
+	cout << "0 - Logout" << endl;
+	
+
 }
 static void print_instructor() {
 	cout << "Choose an Option" << endl;
+	cout << "1 - Print Class List" << endl;
+	cout << "2 - Search for Student" << endl;
+	cout << "3 - Print Schedule" << endl;
+	cout << "4 - Search Course (Default)" << endl;
+	cout << "5 - Search for Course" << endl;
+	cout << "0 - Logout" << endl;
 }
 static void print_student() {
 	cout << "Choose an Option" << endl;
+	cout << "1 - Add Course" << endl;
+	cout << "2 - Drop Course" << endl;
+	cout << "3 - Print Schedule" << endl;
+	cout << "4 - Search Course (Default)" << endl;
+	cout << "5 - Search for Course" << endl;
+	cout << "0 - Logout" << endl;
 }
 static string query_db_text(sqlite3* DB, const char* sql, const char* db_path, string in_email) {
 
@@ -329,7 +354,7 @@ static void insert_user_admin(sqlite3* DB, string in_first_name, string in_last_
 
 static void insert_user_instructor(sqlite3* DB, int in_id, string in_first_name, string in_last_name, 
 	string in_title, int in_hire_year, string in_dept, string in_email) {
-	const char* sql = "INSERT INTO INSTRUCTOR (ID, NAME, SURNAME, TITLE, HIREYEAR, DEPARTMENT, EMAIL) VALUES (?, ?, ?, ?, ?, ?);";
+	const char* sql = "INSERT INTO INSTRUCTOR (ID, NAME, SURNAME, TITLE, HIREYEAR, DEPT, EMAIL) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
 	sqlite3_stmt* stmt;
 
@@ -352,7 +377,7 @@ static void insert_user_instructor(sqlite3* DB, int in_id, string in_first_name,
 
 static void insert_user_student(sqlite3* DB, int in_id, string in_first_name, string in_last_name,
 	int in_grad_year, string in_major, string in_email) {
-	const char* sql = "INSERT INTO STUDENT (ID, NAME, SURNAME, TITLE, HIREYEAR, DEPARTMENT, EMAIL) VALUES (?, ?, ?, ?, ?, ?);";
+	const char* sql = "INSERT INTO STUDENT (ID, NAME, SURNAME, GRADYEAR, MAJOR, EMAIL) VALUES (?, ?, ?, ?, ?, ?);";
 
 	sqlite3_stmt* stmt;
 

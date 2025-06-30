@@ -9,25 +9,25 @@ int main(int argc, char** argv)
 	int exit = sqlite3_open(db_path, &DB);
 
 
-	string email;
-	cout << "Enter email: ";
-	cin >> email;
-	string password;
-	cout << "Enter password: ";
-	cin >> password;
-	while (user_login(DB, db_path, email, password) == 0) {
-		cout << "Incorrect Email or Password" << endl;
-		cout << "Enter email: ";
-		cin >> email;
-		cout << "Enter password: ";
-		cin >> password;
-	}
+	//string email;
+	//cout << "Enter email: ";
+	//cin >> email;
+	//string password;
+	//cout << "Enter password: ";
+	//cin >> password;
+	//while (user_login(DB, db_path, email, password) == 0) {
+	//	cout << "Incorrect Email or Password" << endl;
+	//	cout << "Enter email: ";
+	//	cin >> email;
+	//	cout << "Enter password: ";
+	//	cin >> password;
+	//}
 
 	//string email = "whited3";
 	//string password = "Tp8P!9Ls";
 
-	//string email = "curiem";
-	//string password = "Uz7V^5Mw";
+	string email = "curiem";
+	string password = "Uz7V^5Mw";
 
 	//string email = "brooksm";
 	//string password = "qW9t@3zL";
@@ -85,6 +85,9 @@ int main(int argc, char** argv)
 			else if (user_in == 9) {
 				testUser->link_instructor(DB);
 			}
+			else if (user_in == 10) {
+				testUser->unlink_instructor(DB);
+			}
 			else {
 				cout << "Invalid input" << endl;
 			}
@@ -137,6 +140,7 @@ int main(int argc, char** argv)
 		while (logout(user_in) != 0) {
 			if (user_in == 1) {
 				testUser->add_course(DB, db_path);
+				testUser->setSchedule(DB, db_path);
 			}
 			else if (user_in == 2) {
 				testUser->drop_course(DB);
