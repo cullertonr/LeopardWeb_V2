@@ -9,19 +9,19 @@ int main(int argc, char** argv)
 	int exit = sqlite3_open(db_path, &DB);
 
 
-	//string email;
-	//cout << "Enter email: ";
-	//cin >> email;
-	//string password;
-	//cout << "Enter password: ";
-	//cin >> password;
-	//while (user_login(DB, db_path, email, password) == 0) {
-	//	cout << "Incorrect Email or Password" << endl;
-	//	cout << "Enter email: ";
-	//	cin >> email;
-	//	cout << "Enter password: ";
-	//	cin >> password;
-	//}
+	string email;
+	cout << "Enter email: ";
+	cin >> email;
+	string password;
+	cout << "Enter password: ";
+	cin >> password;
+	while (user_login(DB, db_path, email, password) == 0) {
+		cout << "Incorrect Email or Password" << endl;
+		cout << "Enter email: ";
+		cin >> email;
+		cout << "Enter password: ";
+		cin >> password;
+	}
 
 	//string email = "whited3";
 	//string password = "Tp8P!9Ls";
@@ -29,8 +29,8 @@ int main(int argc, char** argv)
 	//string email = "curiem";
 	//string password = "Uz7V^5Mw";
 
-	string email = "brooksm";
-	string password = "qW9t@3zL";
+	//string email = "brooksm";
+	//string password = "qW9t@3zL";
 
 	/*student* tempStud = new student();
 	populate_student(DB, db_path, tempStud, "curiem");
