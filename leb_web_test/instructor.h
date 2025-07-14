@@ -1,5 +1,8 @@
 #pragma once
 #include "User.h"
+
+// Nick class
+
 class instructor :
     public user
 {
@@ -20,6 +23,9 @@ public:
     virtual string show_last_name();	// returns last name
     virtual int show_id();			// returns id number
     virtual void show_all();			// prints all attributes
+    int getHire_year();
+    string getDept();
+    string getTitle();
 
     void setHire_year(int in_hire_year);
     void setDept(string in_dept);
@@ -29,7 +35,7 @@ public:
 
     void print_schedule(sqlite3* db, const char* db_path);
     void print_class_list(sqlite3* db, const char* db_path);
-    void search_for_student();
+    void search_for_student(sqlite3* db, const char* db_path);
 
     // destructor
     virtual ~instructor();

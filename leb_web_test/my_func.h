@@ -175,17 +175,17 @@ static int user_login(sqlite3* DB, const char* db_path, string in_email, string 
 		}
 		else 
 			sqlite3_finalize(stmt);
-			return 0;
+			return 2;
 	}
 	else if (rc == SQLITE_DONE) {
 		cout << "No user found with email = " << in_email << "\n";
 		sqlite3_finalize(stmt);
-		return 0;
+		return 3;
 	}
 	else {
 		cerr << "Query failed: " << sqlite3_errmsg(DB) << "\n";
 		sqlite3_finalize(stmt);
-		return 0;
+		return 4;
 	}
 
 	sqlite3_finalize(stmt);
@@ -352,8 +352,7 @@ static void insert_user_admin(sqlite3* DB, string in_first_name, string in_last_
 
 }
 
-static void insert_user_instructor(sqlite3* DB, int in_id, string in_first_name, string in_last_name, 
-	string in_title, int in_hire_year, string in_dept, string in_email) {
+static void insert_user_instructor(sqlite3* DB, instructor* tempIns) {
 	const char* sql = "INSERT INTO INSTRUCTOR (ID, NAME, SURNAME, TITLE, HIREYEAR, DEPT, EMAIL) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
 	sqlite3_stmt* stmt;
@@ -361,13 +360,13 @@ static void insert_user_instructor(sqlite3* DB, int in_id, string in_first_name,
 	sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr);
 
 
-	sqlite3_bind_int(stmt, 1, in_id);
-	sqlite3_bind_text(stmt, 2, in_first_name.c_str(), -1, SQLITE_TRANSIENT);
-	sqlite3_bind_text(stmt, 3, in_last_name.c_str(), -1, SQLITE_TRANSIENT);
-	sqlite3_bind_text(stmt, 4, in_title.c_str(), -1, SQLITE_TRANSIENT);
-	sqlite3_bind_int(stmt, 5, in_hire_year);
-	sqlite3_bind_text(stmt, 6, in_dept.c_str(), -1, SQLITE_TRANSIENT);
-	sqlite3_bind_text(stmt, 7, in_email.c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_int(stmt, 1, tempIns->show_id());
+	sqlite3_bind_text(stmt, 2, (tempIns->show_first_name()).c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 3, (tempIns->show_last_name()).c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 4, (tempIns->getTitle()).c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_int(stmt, 5, tempIns->getHire_year());
+	sqlite3_bind_text(stmt, 6, (tempIns->getDept()).c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 7, (tempIns->show_email()).c_str(), -1, SQLITE_TRANSIENT);
 
 	sqlite3_step(stmt);
 
@@ -375,8 +374,7 @@ static void insert_user_instructor(sqlite3* DB, int in_id, string in_first_name,
 
 }
 
-static void insert_user_student(sqlite3* DB, int in_id, string in_first_name, string in_last_name,
-	int in_grad_year, string in_major, string in_email) {
+static void insert_user_student(sqlite3* DB, student* tempStud) {
 	const char* sql = "INSERT INTO STUDENT (ID, NAME, SURNAME, GRADYEAR, MAJOR, EMAIL) VALUES (?, ?, ?, ?, ?, ?);";
 
 	sqlite3_stmt* stmt;
@@ -384,12 +382,12 @@ static void insert_user_student(sqlite3* DB, int in_id, string in_first_name, st
 	sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr);
 
 
-	sqlite3_bind_int(stmt, 1, in_id);
-	sqlite3_bind_text(stmt, 2, in_first_name.c_str(), -1, SQLITE_TRANSIENT);
-	sqlite3_bind_text(stmt, 3, in_last_name.c_str(), -1, SQLITE_TRANSIENT);
-	sqlite3_bind_int(stmt, 4, in_grad_year);
-	sqlite3_bind_text(stmt, 5, in_major.c_str(), -1, SQLITE_TRANSIENT);
-	sqlite3_bind_text(stmt, 6, in_email.c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_int(stmt, 1, tempStud->show_id());
+	sqlite3_bind_text(stmt, 2, (tempStud->show_first_name()).c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 3, (tempStud->show_first_name()).c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_int(stmt, 4, tempStud->getGrad_year());
+	sqlite3_bind_text(stmt, 5, (tempStud->getMajor().c_str()), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 6, (tempStud->show_email().c_str()), -1, SQLITE_TRANSIENT);
 
 	sqlite3_step(stmt);
 

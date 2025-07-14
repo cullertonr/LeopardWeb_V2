@@ -51,6 +51,13 @@ string student::show_last_name() {
 int student::show_id() {
 	return id;
 }
+int student::getGrad_year() {
+	return grad_year;
+}
+string student::getMajor() {
+	return major;
+}
+
 void student::show_all() {
 	cout << "Student's first name is: " << first_name << endl;
 	cout << "Student's last name is: " << last_name << endl;
@@ -88,11 +95,10 @@ void student::print_schedule(sqlite3* db, const char* db_path) {
 void student::search_course() {
 	cout << "Searching for Courses: " << endl;
 }
-void student::add_course(sqlite3* db, const char* db_path) {
-	int in_crn;
-	cout << "Add Course:" << endl;
-	cout << "Enter CRN: ";
-	cin >> in_crn;
+void student::add_course(sqlite3* db, const char* db_path, int in_crn) {
+	//cout << "Add Course:" << endl;
+	//cout << "Enter CRN: ";
+	//cin >> in_crn;
 	const char* sql = "SELECT CRN FROM COURSE WHERE CRN = ?;";
 	if (query_db_int_w_int(db, sql, db_path, in_crn) == -1) {
 		cout << "Invalid CRN" << endl;

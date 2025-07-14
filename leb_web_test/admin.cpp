@@ -178,7 +178,7 @@ void admin::add_users(sqlite3* db) {
         cin >> ins_email;
         tempUser->setEmail(ins_email);
 
-        insert_user_instructor(db, ins_id, ins_name, ins_surname, ins_title, ins_hire_year, ins_dept, ins_email);
+        insert_user_instructor(db, tempUser);
 
         delete tempUser;
     }
@@ -211,7 +211,7 @@ void admin::add_users(sqlite3* db) {
         cin >> stu_email;
         tempUser->setEmail(stu_email);
 
-        insert_user_student(db, stu_id, stu_name,  stu_surname, stu_grad_year, stu_major, stu_email);
+        insert_user_student(db, tempUser);
 
         delete tempUser;
     }

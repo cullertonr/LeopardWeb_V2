@@ -23,10 +23,8 @@ static void populate_course(sqlite3* DB, const char* db_path, course* course, in
 
 static void insert_user_admin(sqlite3* DB, string in_first_name, string in_last_name,
 	int in_id, string in_email, string in_title, string in_office);
-static void insert_user_instructor(sqlite3* DB, int in_id, string in_first_name, string in_last_name,
-	string in_title, int in_hire_year, string in_dept, string in_email);
-static void insert_user_student(sqlite3* DB, int in_id, string in_first_name, string in_last_name,
-	int in_grad_year, string in_major, string in_email);
+static void insert_user_instructor(sqlite3* DB, instructor* tempIns);
+static void insert_user_student(sqlite3* DB, student* tempStud);
 
 static void insert_course(sqlite3* DB, course* tempCourse);
 static void insert_schedule(sqlite3* DB, int in_id, int in_crn);

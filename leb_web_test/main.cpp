@@ -23,14 +23,14 @@ int main(int argc, char** argv)
 	//	cin >> password;
 	//}
 
-	//string email = "whited3";
-	//string password = "Tp8P!9Ls";
+	/*string email = "whited3";
+	string password = "Tp8P!9Ls";*/
 
-	string email = "curiem";
-	string password = "Uz7V^5Mw";
+	//string email = "curiem";
+	//string password = "Uz7V^5Mw";
 
-	//string email = "brooksm";
-	//string password = "qW9t@3zL";
+	string email = "brooksm";
+	string password = "qW9t@3zL";
 
 	/*student* tempStud = new student();
 	populate_student(DB, db_path, tempStud, "curiem");
@@ -109,7 +109,8 @@ int main(int argc, char** argv)
 				testUser->print_class_list(DB, db_path);
 			}
 			else if (user_in == 2) {
-				testUser->search_for_student();
+				testUser->setSchedule(DB, db_path);
+				testUser->search_for_student(DB, db_path);
 			}
 			else if (user_in == 3) {
 				testUser->setSchedule(DB, db_path);
@@ -139,7 +140,7 @@ int main(int argc, char** argv)
 		cin >> user_in;
 		while (logout(user_in) != 0) {
 			if (user_in == 1) {
-				testUser->add_course(DB, db_path);
+				testUser->add_course(DB, db_path, 12345);
 				testUser->setSchedule(DB, db_path);
 			}
 			else if (user_in == 2) {
