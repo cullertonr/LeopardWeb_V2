@@ -1,0 +1,4 @@
+C:\Users\nickd\Documents\lab school\ELEC3225\Lep_Web_GUI\Lep_Web_GUI\Lep_Web_GUI\x64\Debug\Lep_Web_GUI.vcxproj.AssemblyReference.cache
+C:\Users\nickd\Documents\lab school\ELEC3225\Lep_Web_GUI\Lep_Web_GUI\Lep_Web_GUI\x64\Debug\LepWebGUI.LoginForm.resources
+C:\Users\nickd\Documents\lab school\ELEC3225\Lep_Web_GUI\Lep_Web_GUI\Lep_Web_GUI\x64\Debug\Lep_Web_GUI.vcxproj.GenerateResource.cache
+C:\Users\nickd\Documents\lab school\ELEC3225\Lep_Web_GUI\Lep_Web_GUI\Lep_Web_GUI\x64\Debug\LepWebGUI.MainForm.resources

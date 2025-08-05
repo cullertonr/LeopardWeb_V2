@@ -1,0 +1,16 @@
+﻿  LoginForm.cpp
+C:\Users\nickd\Documents\lab school\ELEC3225\Lep_Web_GUI\Lep_Web_GUI\Lep_Web_GUI\LoginForm.h(171,9): warning C4101: 'messageError': unreferenced local variable
+  (compiling source file 'LoginForm.cpp')
+  
+  MainForm.cpp
+  main.cpp
+C:\Users\nickd\Documents\lab school\ELEC3225\Lep_Web_GUI\Lep_Web_GUI\Lep_Web_GUI\LoginForm.h(171,9): warning C4101: 'messageError': unreferenced local variable
+  (compiling source file 'main.cpp')
+  
+  Generating Code...
+  admin.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+main.obj : warning LNK4248: unresolved typeref token (01000023) for 'sqlite3'; image may not run
+LoginForm.obj : warning LNK4248: unresolved typeref token (01000023) for 'sqlite3'; image may not run
+main.obj : warning LNK4248: unresolved typeref token (0100002D) for 'sqlite3_stmt'; image may not run
+LoginForm.obj : warning LNK4248: unresolved typeref token (0100002C) for 'sqlite3_stmt'; image may not run
+  Lep_Web_GUI.vcxproj -> C:\Users\nickd\Documents\lab school\ELEC3225\Lep_Web_GUI\Lep_Web_GUI\x64\Debug\Lep_Web_GUI.exe
